@@ -3,15 +3,12 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const path = require("path");
 
-// Initialize Express
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// MongoDB Connection
 mongoose.connect("mongodb://localhost:27017/iSourcing-db", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -21,7 +18,6 @@ db.once("open", () => {
   console.log("Connected to MongoDB");
 });
 
-// Define Schema for User
 const userSchema = new mongoose.Schema({
   id: String,
   name: String,
@@ -33,7 +29,6 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
-// Multer Storage Configuration for Profile Pictures
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads/");
@@ -48,15 +43,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Routes
-
-// 1. Registration API
 app.post("/api/register", upload.single("profilePicture"), async (req, res) => {
   try {
     const { name, email, username, contactInfo } = req.body;
     const profilePicture = req.file ? req.file.filename : "";
 
-    // Create new user
     const newUser = new User({
       name,
       email,
@@ -75,10 +66,9 @@ app.post("/api/register", upload.single("profilePicture"), async (req, res) => {
   }
 });
 
-// 2. View Registration Data API
 app.get("/api/users", async (req, res) => {
   try {
-    const users = await User.find().select("-__v"); // Exclude version key
+    const users = await User.find().select("-__v");
     res.json(users);
   } catch (err) {
     console.error(err);
@@ -86,7 +76,6 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
-// 3. Update Registration User Data API
 app.put("/api/users/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
@@ -102,7 +91,6 @@ app.put("/api/users/:userId", async (req, res) => {
   }
 });
 
-// 4. Delete User API
 app.delete("/api/users/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
@@ -115,7 +103,6 @@ app.delete("/api/users/:userId", async (req, res) => {
   }
 });
 
-// Start Server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
