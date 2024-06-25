@@ -1,0 +1,26 @@
+{
+  "name": "isourcing-be",
+  "version": "1.0.0",
+  "description": "Backend for Practical Task",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vatsal001/ISourcingTech-pract.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vatsal001/ISourcingTech-pract/issues"
+  },
+  "homepage": "https://github.com/vatsal001/ISourcingTech-pract#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.4.3",
+    "multer": "^1.4.5-lts.1",
+    "path": "^0.12.7"
+  }
+}
